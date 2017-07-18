@@ -1,0 +1,99 @@
+<!DOCTYPE html><html>
+
+<head><title>Coins</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body><center id="desk"></center></body>
+
+</html>
+
+<script type="text/javascript">
+
+var coinfaces=[["Spring.png", "SotC.png"], ["Summer.png", "Zelda.png"], ["Autumn.png", "ICO.gif"], ["Winter.png", "NiGHTs.png"]];;
+
+
+var columns=Math.round(Math.sqrt(coinfaces.length)+0.4999)+2;
+var rows=Math.round(coinfaces.length/columns+0.4999);
+
+var coinwidth=Math.min(Math.floor((window.innerWidth-50)/columns), Math.floor((window.innerHeight-50)/rows));
+var coinheight=coinwidth;
+
+var deskcontents="";
+
+for(i=0; i<Math.floor(coinfaces.length/columns); i++){
+  deskcontents=deskcontents+"<table><tr>";
+  for(j=0; j<columns; j++){
+    deskcontents=deskcontents+"<td style=\"width:"+coinwidth+"px; height:"+coinheight+"px;\" id=\"H"+(columns*i+j)+"\" onclick=\"flip("+(columns*i+j)+")\" class=\"holder\"><img style=\"width:"+coinwidth+"px; height:"+coinheight+"px;\" id=\""+(columns*i+j)+"\" src=\"../Coins-Advanced/"+coinfaces[(columns*i+j)][0]+"\" draggable=\"false\"></img></td>"
+  }
+  deskcontents=deskcontents+"</tr></table>"
+}
+
+if(coinfaces.length%columns!=0){deskcontents=deskcontents+"<table><tr>";}
+
+for(i=0; i<coinfaces.length%columns; i++){
+  deskcontents=deskcontents+"<td style=\"width:"+coinwidth+"px; height:"+coinheight+"px;\" id=\"H"+(columns*Math.floor(coinfaces.length/columns)+i)+"\" onclick=\"flip("+(columns*Math.floor(coinfaces.length/columns)+i)+")\" class=\"holder\"><img style=\"width:"+coinwidth+"px; height:"+coinheight+"px;\" id=\""+(columns*Math.floor(coinfaces.length/columns)+i)+"\" src=\"../Coins-Advanced/"+coinfaces[columns*Math.floor(coinfaces.length/columns)+i][0]+"\" draggable=\"false\"></img></td>"
+}
+
+if(coinfaces.length%columns!=0){deskcontents=deskcontents+"</tr></table>"}
+
+document.getElementById("desk").innerHTML=deskcontents;
+
+var coinstate=[];
+for(i=0; i<coinfaces.length; i++){
+  if(Math.random()>0.5){coinfaces[i].push("Tick2.png")}
+  else{coinfaces[i].push("Tick1.png")}
+  coinstate[i]={flipping:0, t:0, side:0, faces:coinfaces[i]}
+}
+
+var time=0;
+var maxtime=8;
+var fps=60;
+
+function flip(clickedcoin){
+  coinstate[clickedcoin].side=(coinstate[clickedcoin].side+1)%(coinfaces[clickedcoin].length-1); // note -1 to eliminate tick side for this particular build
+  coinstate[clickedcoin].flipping=1;
+  coinstate[clickedcoin].t=time;
+}
+
+function progressframe(){
+  time++;
+  if(time>maxtime){time=0}
+  for(i=0; i<coinfaces.length; i++){
+    if(coinstate[i].flipping==1){document.getElementById(i).style.width=(Math.cos(2*Math.PI*(time-coinstate[i].t)/maxtime)+1)*coinwidth/2+"px";}
+    if(Math.abs(time-coinstate[i].t)==maxtime/2 && coinstate[i].flipping==1){
+      if(shiftdown==1){coinstate[i].faces[coinstate[i].faces.length-1]="Tick.png"}
+      else if(shiftdown==2){coinstate[i].faces[coinstate[i].faces.length-1]="Tick2.png"}
+      else if(Math.random()>0.5){coinstate[i].faces[coinstate[i].faces.length-1]="Tick.png"}
+      else{coinstate[i].faces[coinstate[i].faces.length-1]="Tick2.png"}
+      document.getElementById(i).src="../Coins-Advanced/"+coinstate[i].faces[coinstate[i].side];
+    }
+    if(coinstate[i].t==time && coinstate[i].flipping==1){coinstate[i].flipping=0;}
+  }
+  setTimeout(progressframe, 1000/fps)
+}
+
+function dynamicresize(){
+  coinwidth=Math.min(Math.floor((window.innerWidth-50)/columns), Math.floor((window.innerHeight-50)/rows));
+  coinheight=coinwidth;
+  for(i=0; i<coinfaces.length; i++){
+    document.getElementById("H"+i).style.width=coinwidth+"px";
+    document.getElementById("H"+i).style.height=coinheight+"px";
+    document.getElementById(i).style.width=coinwidth+"px";
+    document.getElementById(i).style.height=coinheight+"px";
+  }
+  setTimeout(dynamicresize, 1000/fps);
+}
+
+var shiftdown=0;
+
+document.body.onkeydown = function(e){
+  if (e.shiftKey) {shiftdown=(shiftdown+1)%3;}
+}
+
+progressframe();
+dynamicresize();
+
+</script>
