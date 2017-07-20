@@ -12,7 +12,7 @@
 
 <script type="text/javascript">
 
-var coinfaces=[["Spring.png", "SotC.png"], ["Summer.png", "Zelda.png"], ["Autumn.png", "ICO.gif"], ["Winter.png", "NiGHTs.png"]];;
+var coinfaces=[["UrzaSpring.png", "Japan.png", "Spring.png", "FinalFantasy.gif"], ["UrzaSummer.png", "Norfolk.png", "Summer.png", "N64.gif"], ["UrzaAutumn.png", "NewYork.png", "Autumn.png", "ICO.gif"], ["UrzaWinter.png", "Switzerland.png", "Winter.png", "NiGHTs.png"]];;
 
 
 var columns=Math.round(Math.sqrt(coinfaces.length)+0.4999)+2;
@@ -77,7 +77,7 @@ function progressframe(){
 
 function dynamicresize(){
   coinwidth=Math.min(Math.floor((window.innerWidth-50)/columns), Math.floor((window.innerHeight-50)/rows));
-  coinheight=coinwidth;
+  coinheight=208*coinwidth/253;
   for(i=0; i<coinfaces.length; i++){
     document.getElementById("H"+i).style.width=coinwidth+"px";
     document.getElementById("H"+i).style.height=coinheight+"px";
