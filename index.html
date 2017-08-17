@@ -52,10 +52,16 @@ var time=0;
 var maxtime=8;
 var fps=60;
 
+var clickrecord='';
+var password='012302310312';
+
 function flip(clickedcoin){
   coinstate[clickedcoin].side=(coinstate[clickedcoin].side+1)%(coinfaces[clickedcoin].length-1); // note -1 to eliminate tick side for this particular build
   coinstate[clickedcoin].flipping=1;
   coinstate[clickedcoin].t=time;
+  clickrecord=clickrecord+clickedcoin;
+  if(clickrecord.length>password.length){clickrecord=clickrecord.substring(clickrecord.length-password.length,clickrecord.length)}
+  if(clickrecord==password){window.location.href='../Coins-Home/index.html';}
 }
 
 function progressframe(){
