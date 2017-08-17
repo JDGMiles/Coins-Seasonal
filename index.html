@@ -15,7 +15,7 @@
 var coinfaces=[["UrzaSpring.png", "Japan.png", "Spring.png", "FinalFantasy.png"], ["UrzaSummer.png", "Norfolk.png", "Summer.png", "N64.gif"], ["UrzaAutumn.png", "NewYork.png", "Autumn.png", "Civilization.png"], ["UrzaWinter.png", "Switzerland.png", "Winter.png", "NiGHTs.gif"]];;
 
 
-var columns=Math.round(Math.sqrt(coinfaces.length)+0.4999)+2;
+var columns=Math.round(Math.sqrt(coinfaces.length)+0.4999);
 var rows=Math.round(coinfaces.length/columns+0.4999);
 
 var coinwidth=Math.min(Math.floor((window.innerWidth-50)/columns), Math.floor((window.innerHeight-50)/rows));

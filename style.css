@@ -7,3 +7,5 @@ html, body {height: 100%;}
 
 body {background-color:black; color:white; vertical-align:middle; display: table-cell; user-select: none;}
 .holder {text-align:center}
+
+td {padding:0px 5px 0px 1px}
