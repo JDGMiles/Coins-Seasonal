@@ -102,4 +102,11 @@ document.body.onkeydown = function(e){
 progressframe();
 dynamicresize();
 
+function allflip(){for(i=0; i<coinfaces.length; i++){setTimeout(flip, 2000*Math.random(), i)}}
+
+setTimeout(allflip, 1000);
+setTimeout(allflip, 2500);
+setTimeout(allflip, 4000);
+setTimeout(allflip, 5500);
+
 </script>
